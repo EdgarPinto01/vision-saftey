@@ -10,33 +10,167 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as ProductsRouteImport } from './routes/products'
+import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as RespiratoryProtectionRouteImport } from './routes/respiratory-protection'
+import { Route as ServicesRouteImport } from './routes/services'
+import { Route as TeamRouteImport } from './routes/team'
+import { Route as VideosRouteImport } from './routes/videos'
+import { Route as VisionFarmsRouteImport } from './routes/vision-farms'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalleryRoute = GalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsRoute = ProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsRoute = ProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RespiratoryProtectionRoute = RespiratoryProtectionRouteImport.update({
+  id: '/respiratory-protection',
+  path: '/respiratory-protection',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeamRoute = TeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VideosRoute = VideosRouteImport.update({
+  id: '/videos',
+  path: '/videos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VisionFarmsRoute = VisionFarmsRouteImport.update({
+  id: '/vision-farms',
+  path: '/vision-farms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/gallery': typeof GalleryRoute
+  '/products': typeof ProductsRoute
+  '/projects': typeof ProjectsRoute
+  '/respiratory-protection': typeof RespiratoryProtectionRoute
+  '/services': typeof ServicesRoute
+  '/team': typeof TeamRoute
+  '/videos': typeof VideosRoute
+  '/vision-farms': typeof VisionFarmsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/gallery': typeof GalleryRoute
+  '/products': typeof ProductsRoute
+  '/projects': typeof ProjectsRoute
+  '/respiratory-protection': typeof RespiratoryProtectionRoute
+  '/services': typeof ServicesRoute
+  '/team': typeof TeamRoute
+  '/videos': typeof VideosRoute
+  '/vision-farms': typeof VisionFarmsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/gallery': typeof GalleryRoute
+  '/products': typeof ProductsRoute
+  '/projects': typeof ProjectsRoute
+  '/respiratory-protection': typeof RespiratoryProtectionRoute
+  '/services': typeof ServicesRoute
+  '/team': typeof TeamRoute
+  '/videos': typeof VideosRoute
+  '/vision-farms': typeof VisionFarmsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/gallery'
+    | '/products'
+    | '/projects'
+    | '/respiratory-protection'
+    | '/services'
+    | '/team'
+    | '/videos'
+    | '/vision-farms'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/gallery'
+    | '/products'
+    | '/projects'
+    | '/respiratory-protection'
+    | '/services'
+    | '/team'
+    | '/videos'
+    | '/vision-farms'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/gallery'
+    | '/products'
+    | '/projects'
+    | '/respiratory-protection'
+    | '/services'
+    | '/team'
+    | '/videos'
+    | '/vision-farms'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  ContactRoute: typeof ContactRoute
+  GalleryRoute: typeof GalleryRoute
+  ProductsRoute: typeof ProductsRoute
+  ProjectsRoute: typeof ProjectsRoute
+  RespiratoryProtectionRoute: typeof RespiratoryProtectionRoute
+  ServicesRoute: typeof ServicesRoute
+  TeamRoute: typeof TeamRoute
+  VideosRoute: typeof VideosRoute
+  VisionFarmsRoute: typeof VisionFarmsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +182,91 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery': {
+      id: '/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products': {
+      id: '/products'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof ProductsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/respiratory-protection': {
+      id: '/respiratory-protection'
+      path: '/respiratory-protection'
+      fullPath: '/respiratory-protection'
+      preLoaderRoute: typeof RespiratoryProtectionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/team': {
+      id: '/team'
+      path: '/team'
+      fullPath: '/team'
+      preLoaderRoute: typeof TeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/videos': {
+      id: '/videos'
+      path: '/videos'
+      fullPath: '/videos'
+      preLoaderRoute: typeof VideosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vision-farms': {
+      id: '/vision-farms'
+      path: '/vision-farms'
+      fullPath: '/vision-farms'
+      preLoaderRoute: typeof VisionFarmsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  ContactRoute: ContactRoute,
+  GalleryRoute: GalleryRoute,
+  ProductsRoute: ProductsRoute,
+  ProjectsRoute: ProjectsRoute,
+  RespiratoryProtectionRoute: RespiratoryProtectionRoute,
+  ServicesRoute: ServicesRoute,
+  TeamRoute: TeamRoute,
+  VideosRoute: VideosRoute,
+  VisionFarmsRoute: VisionFarmsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
