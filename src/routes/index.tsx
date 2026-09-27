@@ -1,24 +1,107 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useRef, useState } from "react";
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Check, ChevronRight, CircleCheck, Flame, HardHat, Mail, MapPin, Menu, Phone, ShieldCheck, Wind, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import heroImage from "@/assets/hero-industrial.jpg";
+import technicianImage from "@/assets/technician.jpg";
+import equipmentImage from "@/assets/equipment.jpg";
+import respiratoryImage from "@/assets/respiratory.jpg";
+import logoAsset from "@/assets/vision-safety-logo.png.asset.json";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({ meta: [
+    { title: "Vision Safety India | Fire & Respiratory Protection" },
+    { name: "description", content: "End-to-end fire safety and respiratory protection solutions since 1997. Consultancy, products, installation and compliance from Verna, Goa." },
+    { property: "og:title", content: "Vision Safety India | Fire & Respiratory Protection" },
+    { property: "og:description", content: "Protecting human lives at work since 1997. Explore fire safety products, services and respiratory protection solutions." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary_large_image" },
+  ] }),
+  component: Home,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
+const nav = [
+  { label: "About", href: "#about" },
+  { label: "Products", href: "#products" },
+  { label: "Services", href: "#services" },
+  { label: "Respiratory Protection", href: "#respiratory" },
+  { label: "Projects", href: "#projects" },
+];
+
+const products = [
+  { number: "01", title: "Fire extinguishers", detail: "Portable protection for diverse workplace environments.", icon: Flame },
+  { number: "02", title: "Hydrants & hose reels", detail: "Reliable first-response equipment for your facility.", icon: ShieldCheck },
+  { number: "03", title: "Fire alarm systems", detail: "Early warning and detection when every second counts.", icon: CircleCheck },
+  { number: "04", title: "Breathing apparatus", detail: "Equipment built for critical air-supply situations.", icon: Wind },
+];
+
+const services = [
+  { number: "01", title: "Consultancy & design", detail: "Practical, site-specific fire protection planning." },
+  { number: "02", title: "Supply & installation", detail: "From the right equipment to a properly installed system." },
+  { number: "03", title: "Testing & commissioning", detail: "Verifying systems are ready to perform when needed." },
+  { number: "04", title: "Maintenance & compliance", detail: "Ongoing servicing and support for NOC requirements." },
+];
+
+const cases = [
+  { type: "Fire protection", title: "Protection built around the workplace", image: heroImage },
+  { type: "Service & maintenance", title: "On-site expertise, where it matters", image: technicianImage },
+  { type: "Safety equipment", title: "The right equipment for every risk", image: equipmentImage },
+  { type: "Breathing air", title: "Air you can depend on", image: respiratoryImage },
+];
+
+function SectionIntro({ eyebrow, title, description }: { eyebrow: string; title: string; description?: string }) {
+  return <div className="max-w-3xl"><span className="eyebrow">{eyebrow}</span><h2 className="section-title mt-6">{title}</h2>{description && <p className="mt-6 max-w-xl text-base leading-7 text-muted-foreground md:text-lg">{description}</p>}</div>;
+}
+
+function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const moveCases = (direction: number) => scrollRef.current?.scrollBy({ left: direction * 440, behavior: "smooth" });
+
+  return <div className="overflow-x-hidden">
+    <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-md">
+      <div className="site-container flex h-[86px] items-center justify-between gap-6">
+        <a href="#top" aria-label="Vision Safety India home" className="flex shrink-0 items-center"><img src={logoAsset.url} alt="Vision Safety" className="h-[66px] w-auto object-contain" width="62" height="66" /></a>
+        <nav aria-label="Main navigation" className="hidden items-center gap-7 xl:flex">{nav.map(item => <a className="nav-link text-[13px] font-medium" key={item.href} href={item.href}>{item.label}</a>)}</nav>
+        <div className="ml-auto hidden items-center gap-5 md:flex"><a href="tel:+919326127464" className="flex items-center gap-2 text-[13px] font-semibold"><Phone className="size-4 text-primary" /> +91 93261 27464</a><Button asChild size="lg" className="h-11 rounded-sm px-5 shadow-none"><a href="#contact">Get in touch <ArrowUpRight /></a></Button></div>
+        <Button className="md:hidden" variant="ghost" size="icon" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</Button>
+      </div>
+      {menuOpen && <nav aria-label="Mobile navigation" className="site-container flex flex-col border-t border-border py-4 md:hidden">{nav.map(item => <a className="border-b border-border py-3 text-sm font-medium" key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>{item.label}</a>)}<a className="py-3 text-sm font-semibold text-primary" href="#contact" onClick={() => setMenuOpen(false)}>Get in touch →</a></nav>}
+    </header>
+
+    <main id="top">
+      <section className="relative flex min-h-[640px] items-end overflow-hidden bg-dark-surface text-on-dark md:min-h-[680px]">
+        <img src={heroImage} alt="Fire safety technician inspecting an industrial fire protection system" className="photo-treatment absolute inset-0 h-full w-full object-cover object-center" width="1600" height="1008" />
+        <div className="hero-shade absolute inset-0" />
+        <div className="site-container relative z-10 pb-16 pt-28 md:pb-24">
+          <div className="max-w-[760px]"><span className="eyebrow !text-on-dark before:!bg-primary">ESTABLISHED IN GOA · 1997</span><h1 className="mt-7 font-display text-[clamp(46px,6vw,86px)] font-medium leading-[1.06]">Protection for what <span className="text-primary">matters most.</span></h1><p className="mt-7 max-w-[580px] text-base leading-7 text-on-dark md:text-lg md:leading-8">End-to-end fire safety and respiratory protection, built around the people and places you depend on.</p><div className="mt-10 flex flex-wrap items-center gap-7"><Button asChild size="lg" className="h-13 rounded-sm px-7 shadow-none"><a href="#services">Explore our solutions <ArrowUpRight /></a></Button><a href="#about" className="line-link text-on-dark">Discover our story <ArrowDown className="size-4" /></a></div></div>
+        </div>
+        <span className="absolute bottom-7 right-6 z-10 hidden text-[10px] font-semibold uppercase tracking-[.18em] text-on-dark-muted md:block">PROTECTING HUMAN LIVES AT WORKPLACE</span>
+      </section>
+
+      <section className="border-b border-border bg-background"><div className="site-container grid grid-cols-3 py-9 md:py-11"><div className="border-r border-border pr-3 md:pr-12"><div className="font-display text-2xl font-medium md:text-5xl">End-to-end</div><p className="mt-2 text-xs text-muted-foreground md:text-sm">Projects</p></div><div className="border-r border-border px-4 md:px-12"><div className="font-display text-2xl font-medium md:text-5xl">On-site</div><p className="mt-2 text-xs text-muted-foreground md:text-sm">Team</p></div><div className="pl-4 md:pl-12"><div className="font-display text-2xl font-medium md:text-5xl">29<span className="text-primary">+</span></div><p className="mt-2 text-xs text-muted-foreground md:text-sm">Years in business</p></div></div></section>
+
+      <section id="about" className="section-space scroll-mt-20"><div className="site-container grid items-center gap-12 lg:grid-cols-[1fr_1.08fr] lg:gap-24"><div><SectionIntro eyebrow="Who we are" title="A safer workplace starts with the right partner." description="Since 1997, Vision Safety India has helped organisations protect their people through thoughtful safety planning, dependable equipment and hands-on support." /><p className="mt-6 max-w-xl leading-7 text-muted-foreground">From our base in Verna, Goa, we bring consultancy, design, supply, installation, testing and compliance together under one roof.</p><a className="line-link mt-9 text-primary" href="#contact">Talk to our team <ArrowUpRight className="size-4" /></a></div><div className="relative"><img src={technicianImage} alt="Safety technicians inspecting a fire protection control panel" className="photo-treatment aspect-[1.22] w-full object-cover" width="1200" height="912" loading="lazy" /><div className="absolute bottom-0 left-0 bg-primary px-5 py-4 text-sm font-medium text-primary-foreground md:px-7">Protecting human lives at workplace.</div></div></div></section>
+
+      <section className="border-y border-border bg-surface py-12 md:py-16"><div className="site-container grid gap-8 md:grid-cols-3 md:gap-0"><div className="md:border-r md:border-border md:pr-10"><span className="text-xs font-bold uppercase tracking-[.17em] text-primary">01 / Mission</span><p className="mt-4 text-lg leading-7">Making reliable safety solutions accessible, practical and built to last.</p></div><div className="md:border-r md:border-border md:px-10"><span className="text-xs font-bold uppercase tracking-[.17em] text-primary">02 / Vision</span><p className="mt-4 text-lg leading-7">Workplaces where every person can do their job with confidence.</p></div><div className="md:pl-10"><span className="text-xs font-bold uppercase tracking-[.17em] text-primary">03 / Credentials</span><p className="mt-4 text-lg leading-7">Connected to the wider safety community through FSAI, NFPA and NSC.</p></div></div></section>
+
+      <section id="products" className="section-space scroll-mt-20"><div className="site-container"><div className="flex flex-col justify-between gap-8 md:flex-row md:items-end"><SectionIntro eyebrow="Our products" title="Equipment you can count on." description="A considered range of essentials to help protect people, assets and operations." /><span className="text-xs font-medium uppercase tracking-[.15em] text-muted-foreground">Selected categories</span></div><div className="mt-12 grid border-t border-l border-border sm:grid-cols-2 lg:grid-cols-4">{products.map(item => <article key={item.number} className="group flex min-h-[300px] flex-col justify-between border-r border-b border-border bg-background p-7 transition-colors hover:bg-surface md:min-h-[340px]"><div className="flex items-start justify-between"><item.icon className="size-9 stroke-[1.25] text-primary" /><span className="text-xs text-muted-foreground">{item.number} / 04</span></div><div><h3 className="font-display text-2xl font-medium">{item.title}</h3><p className="mt-3 text-sm leading-6 text-muted-foreground">{item.detail}</p><a href="#contact" className="mt-6 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.13em] text-primary">Enquire <ArrowUpRight className="size-4" /></a></div></article>)}</div></div></section>
+
+      <section id="services" className="section-space scroll-mt-20 bg-dark-surface text-on-dark"><div className="site-container"><div className="grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:gap-24"><div><span className="eyebrow">Our services</span><h2 className="section-title mt-6">From first plan to final check.</h2><p className="mt-6 max-w-md leading-7 text-on-dark-muted">One experienced team alongside you at every step, from designing the right system to keeping it ready for tomorrow.</p><Button asChild variant="outline" className="mt-9 h-11 rounded-sm border-on-dark/40 bg-transparent px-6 text-on-dark shadow-none hover:bg-on-dark hover:text-foreground"><a href="#contact">Discuss your project <ArrowUpRight /></a></Button></div><div className="border-t border-on-dark/20">{services.map(item => <div key={item.number} className="grid grid-cols-[38px_1fr_24px] items-start gap-3 border-b border-on-dark/20 py-6 md:grid-cols-[54px_1fr_24px] md:py-7"><span className="pt-1 text-xs text-primary">{item.number}</span><div><h3 className="font-display text-xl font-medium md:text-2xl">{item.title}</h3><p className="mt-2 text-sm leading-6 text-on-dark-muted">{item.detail}</p></div><ChevronRight className="mt-1 size-5 text-primary" /></div>)}</div></div></div></section>
+
+      <section id="respiratory" className="section-space scroll-mt-20"><div className="site-container"><div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end lg:gap-20"><SectionIntro eyebrow="Specialist solutions" title="Respiratory Protection" description="The right breathing protection for the work at hand, from everyday environments to demanding operations." /><img src={respiratoryImage} alt="Respiratory protection including breathing apparatus, PAPR and masks" className="photo-treatment aspect-[1.8] w-full object-cover" width="1200" height="912" loading="lazy" /></div><div className="mt-12 grid gap-5 md:grid-cols-2"><article className="border border-border bg-surface p-8 md:p-10"><div className="flex items-start justify-between"><span className="font-display text-3xl font-semibold">Vsafe<span className="text-primary">.</span></span><Wind className="size-7 stroke-[1.3] text-primary" /></div><p className="mt-8 max-w-sm leading-7 text-muted-foreground">Everyday respiratory protection designed around comfort and confidence.</p><div className="mt-9 border-t border-border pt-5 text-sm font-medium"><Check className="mr-2 inline size-4 text-primary" /> N95 masks</div></article><article className="border border-border bg-surface p-8 md:p-10"><div className="flex items-start justify-between"><span className="font-display text-3xl font-semibold">Vision Air<span className="text-primary">.</span></span><ShieldCheck className="size-7 stroke-[1.3] text-primary" /></div><p className="mt-8 max-w-sm leading-7 text-muted-foreground">Specialist breathing-air equipment and support for high-stakes work.</p><div className="mt-9 grid gap-3 border-t border-border pt-5 text-sm font-medium sm:grid-cols-2">{["SCBA", "BA trolley", "NIOSH-approved PAPR", "Breathing cylinder refilling"].map(x => <span key={x}><Check className="mr-2 inline size-4 text-primary" />{x}</span>)}</div></article></div></div></section>
+
+      <section className="section-space border-y border-border bg-surface"><div className="site-container"><SectionIntro eyebrow="Built for your environment" title="Protection wherever work happens." /><div className="mt-12 grid gap-px overflow-hidden border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">{[{name:"Industrial",icon:HardHat,text:"Safeguarding people and processes across demanding facilities."},{name:"Marine",icon:Wind,text:"Practical solutions for environments where readiness matters."},{name:"Commercial",icon:ShieldCheck,text:"Thoughtful protection for the spaces people share every day."},{name:"Healthcare",icon:CircleCheck,text:"Dependable safety planning for essential environments."}].map(item => <div key={item.name} className="min-h-[235px] bg-background p-7"><item.icon className="size-8 stroke-[1.3] text-primary" /><h3 className="mt-10 font-display text-xl font-medium">{item.name}</h3><p className="mt-3 text-sm leading-6 text-muted-foreground">{item.text}</p></div>)}</div></div></section>
+
+      <section id="projects" className="section-space scroll-mt-20"><div className="site-container"><div className="flex items-end justify-between gap-6"><SectionIntro eyebrow="In the field" title="Safety, in practice." description="A look at the spaces, equipment and people behind the work." /><div className="hidden gap-2 sm:flex"><Button variant="outline" size="icon" className="size-11 rounded-full shadow-none" aria-label="Previous projects" onClick={() => moveCases(-1)}><ArrowLeft /></Button><Button size="icon" className="size-11 rounded-full shadow-none" aria-label="Next projects" onClick={() => moveCases(1)}><ArrowRight /></Button></div></div><div ref={scrollRef} className="case-scroll -mr-6 mt-11 flex gap-5 overflow-x-auto pr-6 md:-mr-0 md:pr-0">{cases.map(item => <article key={item.title} className="case-item min-w-[82vw] sm:min-w-[390px] lg:min-w-[410px]"><div className="relative aspect-[1.25] overflow-hidden bg-surface"><img src={item.image} alt={item.title} className="photo-treatment h-full w-full object-cover transition-transform duration-500 hover:scale-[1.03]" width="1200" height="912" loading="lazy" /><div className="image-shade absolute inset-0 pointer-events-none" /><span className="absolute bottom-5 left-5 text-xs font-semibold uppercase tracking-[.15em] text-on-dark">{item.type}</span></div><h3 className="mt-5 font-display text-xl font-medium">{item.title}</h3></article>)}</div><div className="mt-6 flex justify-end gap-2 sm:hidden"><Button variant="outline" size="icon" className="size-11 rounded-full shadow-none" aria-label="Previous projects" onClick={() => moveCases(-1)}><ArrowLeft /></Button><Button size="icon" className="size-11 rounded-full shadow-none" aria-label="Next projects" onClick={() => moveCases(1)}><ArrowRight /></Button></div></div></section>
+
+      <section className="border-y border-border bg-surface py-16 md:py-20"><div className="site-container grid gap-8 md:grid-cols-[.8fr_1.2fr] md:items-center"><div><span className="eyebrow">Connected to standards</span><h2 className="mt-5 font-display text-3xl font-medium md:text-4xl">A commitment to doing it right.</h2></div><div className="grid grid-cols-3 border-l border-border"><div className="border-r border-border px-4 py-5 text-center md:px-7"><span className="font-display text-2xl font-semibold md:text-4xl">FSAI</span><p className="mt-3 text-[11px] text-muted-foreground">Professional member</p></div><div className="border-r border-border px-4 py-5 text-center md:px-7"><span className="font-display text-2xl font-semibold md:text-4xl">NFPA</span><p className="mt-3 text-[11px] text-muted-foreground">Member</p></div><div className="px-4 py-5 text-center md:px-7"><span className="font-display text-2xl font-semibold md:text-4xl">NSC</span><p className="mt-3 text-[11px] text-muted-foreground">Life member</p></div></div></div></section>
+
+      <section className="py-14"><div className="site-container flex flex-col justify-between gap-5 border-l-2 border-primary pl-6 md:flex-row md:items-center md:pl-8"><div><span className="text-xs font-bold uppercase tracking-[.16em] text-primary">Beyond the workplace</span><h2 className="mt-3 font-display text-2xl font-medium">Vision Farms</h2><p className="mt-2 text-sm text-muted-foreground">Our small contribution to a greener, more sustainable future.</p></div><span className="text-xs font-medium uppercase tracking-[.12em] text-muted-foreground">A Vision Safety initiative</span></div></section>
+
+      <section id="contact" className="scroll-mt-20 bg-dark-surface py-20 text-on-dark md:py-28"><div className="site-container grid gap-12 lg:grid-cols-[1fr_.8fr] lg:gap-24"><div><span className="eyebrow">Let's talk safety</span><h2 className="mt-6 max-w-2xl font-display text-[clamp(40px,5vw,68px)] font-medium leading-[1.1]">Ready to make safety a priority?</h2><p className="mt-6 max-w-lg leading-7 text-on-dark-muted">Tell us what you need. We'll help you find the right way forward.</p><Button asChild size="lg" className="mt-9 h-12 rounded-sm px-7 shadow-none"><a href="mailto:info.visionsafetyindia@gmail.com?subject=Safety%20solutions%20enquiry">Send an enquiry <ArrowUpRight /></a></Button></div><div className="grid content-center gap-8 border-t border-on-dark/20 pt-8 lg:border-l lg:border-t-0 lg:pl-14 lg:pt-0"><div className="flex gap-4"><MapPin className="mt-1 size-5 shrink-0 text-primary" /><div><p className="text-xs uppercase tracking-[.15em] text-on-dark-muted">Visit us</p><p className="mt-2">Verna Industrial Estate, Goa, India</p></div></div><div className="flex gap-4"><Phone className="mt-1 size-5 shrink-0 text-primary" /><div><p className="text-xs uppercase tracking-[.15em] text-on-dark-muted">Call us</p><div className="mt-2 flex flex-col gap-1"><a href="tel:+919326127464" className="hover:text-primary">+91 93261 27464</a><a href="tel:+919326127199" className="hover:text-primary">+91 93261 27199</a><a href="tel:+917798988905" className="hover:text-primary">+91 77989 88905</a></div></div></div><div className="flex gap-4"><Mail className="mt-1 size-5 shrink-0 text-primary" /><div><p className="text-xs uppercase tracking-[.15em] text-on-dark-muted">Write to us</p><a href="mailto:info.visionsafetyindia@gmail.com" className="mt-2 block break-all hover:text-primary">info.visionsafetyindia@gmail.com</a><p className="mt-2 text-sm text-on-dark-muted">9:00 AM – 6:00 PM</p></div></div></div></div></section>
+    </main>
+
+    <footer className="bg-dark-surface text-on-dark"><div className="site-container border-t border-on-dark/20 pt-12"><div className="grid gap-10 pb-14 md:grid-cols-[1.7fr_1fr_1fr_1fr]"><div><div className="font-display text-2xl font-semibold">VISION <span className="text-primary">SAFETY</span></div><p className="mt-4 max-w-xs text-sm leading-6 text-on-dark-muted">Protecting Human Lives at Workplace since 1997.</p></div><div><h3 className="text-xs font-bold uppercase tracking-[.16em]">Explore</h3><div className="mt-5 flex flex-col gap-3 text-sm text-on-dark-muted"><a href="#about" className="hover:text-on-dark">About us</a><a href="#products" className="hover:text-on-dark">Products</a><a href="#services" className="hover:text-on-dark">Services</a></div></div><div><h3 className="text-xs font-bold uppercase tracking-[.16em]">Solutions</h3><div className="mt-5 flex flex-col gap-3 text-sm text-on-dark-muted"><a href="#respiratory" className="hover:text-on-dark">Respiratory Protection</a><a href="#projects" className="hover:text-on-dark">In the field</a><a href="#contact" className="hover:text-on-dark">Contact</a></div></div><div><h3 className="text-xs font-bold uppercase tracking-[.16em]">Based in Goa</h3><p className="mt-5 text-sm leading-6 text-on-dark-muted">Verna Industrial Estate<br />Goa, India</p></div></div><div className="flex flex-col justify-between gap-4 border-t border-on-dark/20 py-6 text-xs text-on-dark-muted md:flex-row"><span>© {new Date().getFullYear()} Vision Safety India. All rights reserved.</span><a href="#top" className="flex items-center gap-2 hover:text-on-dark">Back to top <ArrowUpRight className="size-3" /></a></div></div></footer>
+  </div>;
 }
