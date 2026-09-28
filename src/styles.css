@@ -75,16 +75,47 @@
 .eyebrow { display: inline-flex; align-items: center; gap: 12px; color: var(--primary); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .19em; }
 .eyebrow::before { content: ""; width: 22px; height: 1px; background: currentColor; }
 .section-title { font-size: clamp(36px, 4.4vw, 64px); line-height: 1.1; font-weight: 500; }
-.hero-shade { background: linear-gradient(90deg, oklch(0.12 0.005 60 / .86) 0%, oklch(0.12 0.005 60 / .53) 46%, oklch(0.12 0.005 60 / .08) 100%); }
+.hero-shade { background: linear-gradient(100deg, oklch(0.12 0.005 60 / .92) 0%, oklch(0.12 0.005 60 / .6) 42%, oklch(0.12 0.005 60 / .15) 76%, oklch(0.12 0.005 60 / .04) 100%); }
+.hero-vignette { background: linear-gradient(180deg, oklch(0.12 0.005 60 / .3) 0%, transparent 24%, transparent 68%, oklch(0.12 0.005 60 / .65) 100%); }
+.grain-overlay { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); opacity: .05; mix-blend-mode: overlay; }
+.scroll-cue-line { position: relative; width: 1px; height: 34px; overflow: hidden; background: oklch(1 0 0 / .18); }
+.scroll-cue-line::after { content: ""; position: absolute; inset: 0; background: var(--primary); animation: scroll-cue 2.2s ease-in-out infinite; }
+@keyframes scroll-cue { 0%, 100% { transform: translateY(-100%); } 50% { transform: translateY(100%); } }
+.marquee-track { animation: marquee 26s linear infinite; }
+.marquee-row:hover .marquee-track { animation-play-state: paused; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 .image-shade { background: linear-gradient(0deg, oklch(0.12 0.005 60 / .7), transparent 72%); }
 .photo-treatment { filter: saturate(.82); }
-.nav-link { transition: color .2s; }
+.nav-link { position: relative; transition: color .2s; }
 .nav-link:hover { color: var(--primary); }
+.nav-link::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 1px; background: var(--primary); transform: scaleX(0); transform-origin: left; transition: transform .3s cubic-bezier(.65,0,.35,1); }
+.nav-link:hover::after { transform: scaleX(1); }
 .line-link { display: inline-flex; align-items: center; gap: 14px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; transition: gap .2s, color .2s; }
 .line-link:hover { gap: 20px; color: var(--primary); }
 .case-scroll { scrollbar-width: none; scroll-snap-type: x mandatory; }
 .case-scroll::-webkit-scrollbar { display: none; }
 .case-item { scroll-snap-align: start; }
+
+/* Premium hover primitives, reused across cards, tiles and CTAs */
+.card-lift { transition: transform .45s cubic-bezier(.22,1,.36,1), box-shadow .45s cubic-bezier(.22,1,.36,1), border-color .45s ease; will-change: transform; }
+.card-lift:hover { transform: translateY(-7px); box-shadow: 0 28px 60px -30px oklch(0.19 0.006 60 / .35); border-color: var(--primary); }
+.perspective-host { perspective: 1200px; }
+.shine { position: relative; overflow: hidden; }
+.shine::after { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 40%, oklch(1 0 0 / .16) 50%, transparent 60%); background-size: 220% 220%; background-position: 130% 0; transition: background-position .75s ease; pointer-events: none; }
+.shine:hover::after { background-position: -30% 100%; }
+.icon-pop { transition: transform .4s cubic-bezier(.22,1,.36,1); }
+.group:hover .icon-pop { transform: scale(1.12) rotate(-4deg); }
+.arrow-nudge { transition: transform .3s cubic-bezier(.22,1,.36,1); }
+.group:hover .arrow-nudge { transform: translate(3px, -3px); }
+.badge-glow { transition: transform .35s cubic-bezier(.22,1,.36,1), border-color .35s ease, color .35s ease; }
+.badge-glow:hover { transform: translateY(-4px); border-color: var(--primary); color: var(--primary); }
+
+/* Team card portrait overlay */
+.team-card img { filter: saturate(.55) contrast(1.02); transition: transform .8s cubic-bezier(.22,1,.36,1), filter .6s ease; }
+.team-card:hover img { transform: scale(1.06); filter: saturate(1) contrast(1.02); }
+.team-card .team-reveal { transform: translateY(calc(100% - 84px)); transition: transform .5s cubic-bezier(.22,1,.36,1); }
+.team-card:hover .team-reveal { transform: translateY(0); }
+
 @media (max-width: 767px) {
   .site-container { width: min(100% - 36px, 1320px); }
   .hero-shade { background: linear-gradient(90deg, oklch(0.12 0.005 60 / .83), oklch(0.12 0.005 60 / .32)); }

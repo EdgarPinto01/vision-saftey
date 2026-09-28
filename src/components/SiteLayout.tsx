@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 import { ArrowUpRight, Menu, Phone, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import logoAsset from "@/assets/vision-safety-logo.png.asset.json";
+import logo from "@/assets/vision-safety-logo.png";
 
 const links = [
   { label: "About", to: "/about" }, { label: "Products", to: "/products" },
@@ -15,7 +15,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
   return <div className="overflow-x-hidden">
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-md">
       <div className="site-container flex h-[86px] items-center justify-between gap-6">
-        <Link to="/" aria-label="Vision Safety India home" className="flex shrink-0 items-center"><img src={logoAsset.url} alt="Vision Safety" className="h-[66px] w-auto object-contain" width="62" height="66" /></Link>
+        <Link to="/" aria-label="Vision Safety India home" className="flex shrink-0 items-center"><img src={logo} alt="Vision Safety" className="h-[66px] w-auto object-contain" width="62" height="66" /></Link>
         <nav aria-label="Main navigation" className="hidden items-center gap-7 xl:flex">{links.map(item => <Link key={item.to} to={item.to} activeProps={{ className: "text-primary" }} className="nav-link text-[13px] font-medium">{item.label}</Link>)}</nav>
         <div className="ml-auto hidden items-center gap-5 md:flex"><a href="tel:+919326127464" className="flex items-center gap-2 text-[13px] font-semibold"><Phone className="size-4 text-primary" /> +91 93261 27464</a><Button asChild size="lg" className="h-11 rounded-sm px-5 shadow-none"><Link to="/contact">Get in touch <ArrowUpRight /></Link></Button></div>
         <Button className="md:hidden" variant="ghost" size="icon" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</Button>
